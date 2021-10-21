@@ -1,0 +1,12 @@
+function schedule () {
+    while [ TRUE ] 
+    do
+        sail artisan schedule:run
+        echo "sleep 60 secs..."
+        sleep 60
+    done
+}
+
+function sublist () {
+    docker run --rm -t hypnza/sublist3r -d "$1"
+}
