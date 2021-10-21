@@ -1,0 +1,1 @@
+export PROMPT='%{$fg[green]%}%n@%m %{$reset_color%}%(?:%{%}➜ :%{%}➜ ) %{$fg[cyan]%}%~%{$reset_color%} $(git_prompt_info)'
