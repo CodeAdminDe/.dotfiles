@@ -11,6 +11,10 @@ function sublist () {
     docker run --rm -t hypnza/sublist3r -d "$1"
 }
 
+function zap () {
+docker run -i owasp/zap2docker-stable zap-cli quick-scan --self-contained --start-options '-config api.disablekey=true' "$1"
+}
+
 function code-install-extensions () {
    cat $HOME/.dotfiles/.vscode-extensions | xargs -L 1 code --install-extension
 }
