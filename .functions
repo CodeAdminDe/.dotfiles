@@ -16,7 +16,7 @@ function zap () {
 }
 
 function swagger-editor () {
-    docker run -p "$1":8080 swaggerapi/swagger-editor
+    docker run --rm -p "$1":8080 swaggerapi/swagger-editor
 }
 
 function code-install-extensions () {
