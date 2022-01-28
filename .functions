@@ -12,7 +12,11 @@ function sublist () {
 }
 
 function zap () {
-docker run -i owasp/zap2docker-stable zap-cli quick-scan --self-contained --start-options '-config api.disablekey=true' "$1"
+    docker run -i owasp/zap2docker-stable zap-cli quick-scan --self-contained --start-options '-config api.disablekey=true' "$1"
+}
+
+function swagger-editor () {
+    docker run -p "$1":8080 swaggerapi/swagger-editor
 }
 
 function code-install-extensions () {
