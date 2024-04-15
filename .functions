@@ -30,6 +30,21 @@ function showcert-dates () {
     echo | openssl s_client -showcerts -servername $1 -connect $1:443 2>/dev/null | openssl x509 -inform pem -noout -dates
 }
 
+# pfx2cer mycrtandpriv.pfx mycert.cer
+function pfx2cer () {
+    openssl pkcs12 -in $1 -clcerts -nokeys -out $2
+}
+
+# pfx2key mycrtandpriv.pfx myprivkey.key
+function pfx2key () {
+    openssl pkcs12 -in $1 -nocerts -out $2
+}
+
+# rempass myprivkey.key myprivkey.pem
+function rempass () {
+    openssl rsa -in $1 -out $2
+}
+
 function swagger-editor () {
     docker run --rm -p "$1":8080 swaggerapi/swagger-editor
 }
