@@ -15,6 +15,20 @@ function zap () {
     docker run -i owasp/zap2docker-stable zap-cli quick-scan --self-contained --start-options '-config api.disablekey=true' "$1"
 }
 
+# checkdmarc <args> // https://domainaware.github.io/checkdmarc/index.html
+function checkdmarc() {
+docker build -t ca/checkdmarc - <<EOF
+    FROM pypy:latest
+
+    RUN apt-get update && \
+        apt-get install -y python3-pip && \
+        pip3 install checkdmarc
+
+    ENTRYPOINT ["checkdmarc"]
+EOF
+    docker run --rm -t ca/checkdmarc "$1"
+}
+
 # fingerprint sha1|sha256|sha512 cert.pem
 function fingerprint () {
     openssl x509 -noout -fingerprint -$1 -inform pem -in $2
