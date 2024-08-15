@@ -1,3 +1,47 @@
+function wsl-mount-netdev () {
+  sudo whoami 1>/dev/null && {
+    if [[ "$1" =~ ^[A-Za-z]$ ]]; then
+      dUpper=$(echo $1 | tr '[:lower:]' '[:upper:]')
+      dLower=$(echo $1 | tr '[:upper:]' '[:lower:]')
+      if [[ $dLower == "c" ]] then echo "You won't mount C: .. trust me! ;-)" && return; fi
+
+      echo "Mounting $dUpper to /mnt/$dLower ..."
+      if [[ ! -d "/mnt/$dLower" ]]; then
+        sudo mkdir /mnt/$dLower
+        sudo mount -t drvfs $dUpper: /mnt/$dLower
+        echo "Mounted $dUpper to /mnt/$dLower"
+      else
+        echo "Err: /mnt/$dLower already exists. Can not process mounting. Abort."
+      fi
+    else
+      echo "Err: Please provide the network device letter (1 character) that you want to mount (A-Z or a-z)."
+    fi
+    sudo -k
+  }
+}
+
+function wsl-umount-netdev () {
+  sudo whoami 1>/dev/null && {
+    if [[ "$1" =~ ^[A-Za-z]$ ]]; then
+      dUpper=$(echo $1 | tr '[:lower:]' '[:upper:]')
+      dLower=$(echo $1 | tr '[:upper:]' '[:lower:]')
+      if [[ $dLower == "c" ]] then echo "You won't unmount C: .. trust me! ;-)" && return; fi
+
+      echo "Unmounting $dUpper of /mnt/$dLower ..."
+      if [[ $(sudo mount | grep /mnt/$dLower) != "" ]]; then
+        sudo umount /mnt/$dLower
+        echo "Unmounted $dUpper of /mnt/$dLower"
+        sudo rm -d -i /mnt/$dLower
+      else
+        echo "Err: /mnt/$dLower is not mounted at all. Can not process umount. Abort."
+      fi
+    else
+      echo "Err: Please provide the network device letter (1 character) that you want to mount (A-Z or a-z)."
+    fi
+    sudo -k
+  }
+}
+
 function schedule () {
     while [ TRUE ] 
     do
