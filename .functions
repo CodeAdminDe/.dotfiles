@@ -1,3 +1,36 @@
+############ GitLab ############
+function gl-close-issues () {
+    if [ "$#" -lt 5 ]; then
+        echo "Usage: gl-close-issues gitlabFqdn (string) projectId (int) personalAccessToken (string) assignSelf (bool true|false) issueId1 (int) issueId2 (int) ..."
+        echo "Sample: gl-close-issues git.example.com glt-1234567890 true 12 13 14"
+        return 1
+    fi
+
+    local gitlabFqdn="$1"
+    local projectId="$2"
+    local personalAccessToken="$3"
+    local assignSelf="$4"
+    local userId=""
+
+    if [[ "$assignSelf" == "true" ]]; then
+        userId=$(curl -s -H "PRIVATE-TOKEN: $personalAccessToken" "https://$gitlabFqdn/api/v4/user" | jq -r '.id')
+        if [ -z "$userId" ]; then
+            echo "Err: Did not receive user id. Auth issue?"
+            return 1
+        fi
+    fi
+
+    for issueId in "${@:5}"; do
+        if [[ "$assignSelf" == "true" ]]; then
+            curl -X PUT "https://$gitlabFqdn/api/v4/projects/$projectId/issues/$issueId" -H "PRIVATE-TOKEN: $personalAccessToken" -d "state_event=close&assignee_id=$userId"
+        else
+            curl -X PUT "https://$gitlabFqdn/api/v4/projects/$projectId/issues/$issueId" -H "PRIVATE-TOKEN: $personalAccessToken" -d "state_event=close"
+        fi
+    done
+}
+
+############ WSL ############
+
 function wsl-mount-netdev () {
   sudo whoami 1>/dev/null && {
     if [[ "$1" =~ ^[A-Za-z]$ ]]; then
@@ -41,6 +74,9 @@ function wsl-umount-netdev () {
     sudo -k
   }
 }
+
+
+############ Common ############
 
 function schedule () {
     while [ TRUE ] 
