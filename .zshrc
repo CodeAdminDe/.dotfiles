@@ -104,6 +104,10 @@ source $ZSH/oh-my-zsh.sh
 # https://fluxcd.io/flux/cmd/flux_completion_zsh/
 command -v flux >/dev/null && . <(flux completion zsh)
 
+# https://brew.sh / https://docs.brew.sh/Homebrew-on-Linux / https://docs.brew.sh/Analytics
+export HOMEBREW_NO_ANALYTICS=1
+test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 source $HOME/.dotfiles/.exports
 source $HOME/.dotfiles/.aliases
 source $HOME/.dotfiles/.functions
