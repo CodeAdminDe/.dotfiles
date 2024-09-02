@@ -101,6 +101,9 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# https://fluxcd.io/flux/cmd/flux_completion_zsh/
+command -v flux >/dev/null && . <(flux completion zsh)
+
 source $HOME/.dotfiles/.exports
 source $HOME/.dotfiles/.aliases
 source $HOME/.dotfiles/.functions
