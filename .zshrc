@@ -111,3 +111,4 @@ test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/bre
 source $HOME/.dotfiles/.exports
 source $HOME/.dotfiles/.aliases
 source $HOME/.dotfiles/.functions
+source $HOME/.dotfiles/.functions-k8s

@@ -1,0 +1,19 @@
+############ kubectl ############
+### PV & PVC
+# patch pv reclaim policy to retain
+function k-patch-pv-retain () {
+    if [ "$#" -ne 1 ]; then
+      echo "Usage: k-patch-pv-retain <the-pv-name-to-patch>"
+    else
+      kubectl patch pv $1 -p '{"spec":{"persistentVolumeReclaimPolicy":"Retain"}}'
+    fi
+}
+
+# patch pv reclaim policy to delete
+function k-patch-pv-delete () {
+    if [ "$#" -ne 1 ]; then
+      echo "Usage: k-patch-pv-delete <the-pv-name-to-patch>"
+    else
+      kubectl patch pv $1 -p '{"spec":{"persistentVolumeReclaimPolicy":"Delete"}}'
+    fi
+}
