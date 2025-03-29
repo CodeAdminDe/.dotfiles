@@ -17,3 +17,20 @@ function k-patch-pv-delete () {
       kubectl patch pv $1 -p '{"spec":{"persistentVolumeReclaimPolicy":"Delete"}}'
     fi
 }
+
+# patch helmrelease suspend status true
+function k-patch-hr-suspend-true () {
+    if [ "$#" -ne 2 ]; then
+      echo "Usage: k-patch-hr-suspend-true <the-namespace-name> <the-helmrelease name>"
+    else
+      kubectl -n $1 patch helmrelease $2  --type='json' -p='[{"op": "replace", "path": "/spec/suspend", "value": true}]'
+    fi
+}
+# patch helmrelease suspend status false
+function k-patch-hr-suspend-false () {
+    if [ "$#" -ne 2 ]; then
+      echo "Usage: k-patch-hr-suspend-false <the-namespace-name> <the-helmrelease name>"
+    else
+      kubectl -n $1 patch helmrelease $2  --type='json' -p='[{"op": "replace", "path": "/spec/suspend", "value": false}]'
+    fi
+}
