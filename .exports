@@ -1,1 +1,3 @@
 export PROMPT='%{$fg[green]%}%n@%m %{$reset_color%}%(?:%{%}➜ :%{%}➜ ) %{$fg[cyan]%}%~%{$reset_color%} $(git_prompt_info)'
+#krew https://krew.sigs.k8s.io/docs/user-guide/setup/install/#bash
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
