@@ -117,8 +117,8 @@ source $HOME/.dotfiles/.functions
 source $HOME/.dotfiles/.functions-k8s
 
 # Added by LM Studio CLI (lms)
-# and updated to use home env instead hard-coded path by FR
-export PATH="$PATH:$HOME/.lmstudio/bin"
+# and updated to use home env and only add if it is installed; instead hard-coded path by FR
+test -d $HOME/.lmstudio/bin > /dev/null && export PATH="$PATH:$HOME/.lmstudio/bin"
 # End of LM Studio CLI section
 
 
