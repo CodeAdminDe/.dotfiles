@@ -3,3 +3,5 @@ export PROMPT='%{$fg[green]%}%n@%m %{$reset_color%}%(?:%{%}➜ :%{%}➜ ) %{$fg[
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 #skuper - curl https://skupper.io/install.sh | sh 
 export PATH="$HOME/.local/bin:$PATH"
+#GNU Make - brew install make
+test -d /opt/homebrew/opt/make/libexec/gnubin > /dev/null && export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
