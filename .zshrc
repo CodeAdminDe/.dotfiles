@@ -102,8 +102,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Set environment specific variables within your .env file to allow overriding behaviour of your .dotfiles
-# You could use <anything>.env, stage.env, dev.env, private.env, work.env, prod.env, etc...
-for file in $HOME/.dotfiles/envs/*.env; do
+# You could use .<anything>.env, .stage.env, .dev.env, .private.env, .work.env, .prod.env, etc...
+for file in $HOME/.dotfiles/envs/.*.env; do
   source "$file"
 done
 
