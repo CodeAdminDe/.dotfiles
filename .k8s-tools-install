@@ -1,0 +1,31 @@
+: "${INSTALL_KRR:=true}"
+: "${INSTALL_K9S_PLUGIN_KRR:=true}"
+
+# --- KRR und k9s Resource Recommendations Plugin ---
+if [ "$INSTALL_KRR" = "true" ]; then
+  if command -v brew >/dev/null 2>&1; then
+    if ! brew list krr >/dev/null 2>&1; then
+      echo "[KRR] Installing krr via Homebrew..."
+      brew tap robusta-dev/homebrew-krr
+      brew install krr
+    else
+      echo "[KRR] krr bereits installiert. Überspringe Installation."
+    fi
+  else
+    echo "[KRR] Homebrew nicht verfügbar. Überspringe krr-Installation."
+  fi
+fi
+
+
+if [ "$INSTALL_K9S_PLUGIN_KRR" = "true" ]; then
+  if command -v curl >/dev/null 2>&1; then
+    mkdir -p "${HOME}/.k9s/plugin"
+    echo "[k9s-Plugin] Lade resource-recommendations.yaml herunter..."
+    curl -sSL \
+      "https://raw.githubusercontent.com/derailed/k9s/master/plugins/resource-recommendations.yaml" \
+      -o "${HOME}/.k9s/plugin/resource-recommendations.yaml"
+  else
+    echo "[k9s-Plugin] curl nicht verfügbar. Überspringe Plugin-Download."
+  fi
+fi
+# --- Ende KRR und k9s Resource Recommendations Plugin ---
