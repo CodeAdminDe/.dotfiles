@@ -76,6 +76,32 @@ function wsl-umount-netdev () {
 }
 
 
+############ DevContainer ############
+dcode() {
+    local default_behavior="y"
+    
+    local choice="$1"
+
+    if [[ -z "$choice" ]]; then
+        if [[ "$default_behavior" == "p" ]]; then
+            printf "Do you want to load your .dotfiles within this devcontainer? (y/n): "
+            read choice
+        else
+            choice="$default_behavior"
+        fi
+    fi
+
+    if [[ "$choice" =~ ^[Yy]$ ]]; then
+        export INSTALL_DOTFILES="true"
+        echo "🚀 Booting devcontainer w/ dotfiles ..."
+    else
+        export INSTALL_DOTFILES="false"
+        echo "⚡ Booting devcontainer w/o dotfiles ..."
+    fi
+
+    devcontainer open .
+}
+
 ############ Common ############
 
 function schedule () {
