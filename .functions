@@ -77,7 +77,7 @@ function wsl-umount-netdev () {
 
 
 ############ DevContainer ############
-dcode() {
+function dcode() {
     local default_behavior="y"
     
     local choice="$1"
@@ -99,7 +99,7 @@ dcode() {
         echo "⚡ Booting devcontainer w/o dotfiles ..."
     fi
 
-    devcontainer open .
+    devcontainer up
 }
 
 ############ Common ############
