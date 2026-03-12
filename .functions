@@ -83,31 +83,30 @@ function dcode() {
     local default_behavior="y"
     local DCIGHOREPINST="https://raw.githubusercontent.com/devcontainers/cli/main/scripts/install.sh"
 
-    if ! command -v devcontainer &> /dev/null; then
-        if [[ -x "$HOME/.devcontainers/bin/devcontainer" ]]; then
-            export PATH="$HOME/.devcontainers/bin:$PATH"
-        else
-            echo "devcontainer cli not available. Do you want to download and install by exec the offical installation script from ${DCIGHOREPINST}? (y/n): "
-            read install_choice
+    if [[ -x "$HOME/.devcontainers/bin/devcontainer" ]]; then
+        export PATH="$HOME/.devcontainers/bin:$PATH"
+    else
+        echo "devcontainer cli not available within your local home path. Do you want to download and install by exec the offical installation script from ${DCIGHOREPINST}? (y/n): "
+        read install_choice
+        
+        if [[ "$install_choice" =~ ^[YyJj]$ ]]; then
+            echo "📦 Installation via offical script started: devcontainer cli ..."
             
-            if [[ "$install_choice" =~ ^[YyJj]$ ]]; then
-                echo "📦 Installation via offical script started: devcontainer cli ..."
-                
-                curl -fsSL $DCIGHOREPINST | sh
-                
-                export PATH="$HOME/.devcontainers/bin:$PATH"
-                
-                if ! command -v devcontainer &> /dev/null; then
-                    echo "❌ Error: 'devcontainer' could not be found. Installation failed."
-                    return 1
-                fi
-                echo "✅ devcontainer cli installed successfully!"
-            else
-                echo "🛑 Cannot boot devcontainer without cli. Please provide devcontainer cli first."
+            curl -fsSL $DCIGHOREPINST | sh
+            
+            export PATH="$HOME/.devcontainers/bin:$PATH"
+            
+            if ! command -v devcontainer &> /dev/null; then
+                echo "❌ Error: 'devcontainer' could not be found. Installation failed."
                 return 1
             fi
+            echo "✅ devcontainer cli installed successfully!"
+        else
+            echo "🛑 Cannot boot devcontainer without cli. Please provide devcontainer cli first."
+            return 1
         fi
     fi
+    
 
     if [[ -z "$choice" ]]; then
         if [[ "$default_behavior" == "p" ]]; then
